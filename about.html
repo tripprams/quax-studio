@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — QUA✦ STUDIO</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,700;1,700;1,900&display=swap');
+
+    /* ── RESET & BASE ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #fff; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+    /* ── PIXEL GRID BACKGROUND ── */
+    .pixel-bg {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+      opacity: 0.035;
+      background-image:
+        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ── STAR FIELD ── */
+    .star-field { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .star { position: absolute; background: #fff; animation: twinkle var(--d) ease-in-out infinite alternate; }
+    @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.7; } }
+
+    section, nav, footer { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 2rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace; font-size: 1.3rem; font-weight: 700;
+      letter-spacing: 0.08em; color: #fff; display: flex; align-items: center;
+      gap: 1px; text-decoration: none;
+    }
+
+    /* The spinning red star — used throughout the site */
+    .logo-star {
+      color: #e63329; font-size: 0.9rem; display: inline-block;
+      animation: spin-star 8s linear infinite; margin: 0 1px;
+    }
+
+    @keyframes spin-star { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); font-family: 'Space Mono', monospace;
+    }
+
+    .nav-links li { cursor: pointer; transition: color 0.2s; }
+    .nav-links li:hover, .nav-links li.active { color: #fff; }
+
+    .nav-cta {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      border: 1px solid rgba(255,255,255,0.25); padding: 0.6rem 1.2rem;
+      cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+      color: #fff; background: transparent;
+    }
+    .nav-cta:hover { background: #e63329; border-color: #e63329; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 7rem 4rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .page-eyebrow {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: #e63329;
+      margin-bottom: 2rem; display: flex; align-items: center; gap: 0.8rem;
+    }
+
+    .page-eyebrow::before {
+      content: ''; display: block; width: 20px; height: 1px; background: #e63329;
+    }
+
+    .page-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900; font-style: italic;
+      line-height: 1.0; letter-spacing: -0.01em;
+    }
+
+    .page-headline .accent { color: #e63329; }
+
+    /* ── ABOUT CONTENT ── */
+    .about-section {
+      padding: 6rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* ── PHOTO PLACEHOLDER ──
+       Replace this div with an <img> tag when the photo is ready.
+       Suggested: one shot of both of you on set or during a production.
+       img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+    ── */
+    .photo-placeholder {
+      aspect-ratio: 4/5;
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .photo-placeholder-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+      text-align: center;
+      line-height: 2;
+    }
+
+    .photo-placeholder-star {
+      color: #e63329;
+      font-size: 1.2rem;
+      display: inline-block;
+      animation: spin-star 8s linear infinite;
+    }
+
+    /* ── BIO COPY ── */
+    .about-copy { display: flex; flex-direction: column; justify-content: center; gap: 2rem; }
+
+    .about-label {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+
+    .about-label::before {
+      content: ''; width: 14px; height: 1px;
+      background: rgba(255,255,255,0.2); display: block;
+    }
+
+    /* PARTNERSHIP HEADLINE — edit text in HTML below */
+    .about-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900; font-style: italic;
+      line-height: 1.2;
+    }
+
+    .about-headline .accent { color: #e63329; }
+
+    /* BIO PARAGRAPH — edit text in HTML below */
+    .about-para {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.85;
+      font-weight: 300;
+      max-width: 480px;
+    }
+
+    /* ── VALUES / BELIEFS STRIP ──
+       Edit the items in the HTML below
+    ── */
+    .beliefs {
+      padding: 5rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .beliefs-label {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 3rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+
+    .beliefs-label::before {
+      content: ''; width: 14px; height: 1px;
+      background: rgba(255,255,255,0.2); display: block;
+    }
+
+    .beliefs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .belief-card {
+      background: #000; padding: 2.5rem;
+      transition: background 0.25s;
+    }
+
+    .belief-card:hover { background: #060606; }
+
+    .belief-star {
+      color: #e63329; font-size: 0.65rem;
+      margin-bottom: 1.2rem; display: block;
+    }
+
+    /* Belief card title — Playfair italic */
+    .belief-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 700; font-style: italic;
+      margin-bottom: 0.7rem; line-height: 1.2;
+    }
+
+    /* Belief card description */
+    .belief-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.75; font-weight: 300;
+    }
+
+    /* ── CTA STRIP ── */
+    .about-cta {
+      padding: 6rem 4rem; text-align: center;
+    }
+
+    .about-cta-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; font-style: italic;
+      margin-bottom: 1.2rem; line-height: 1.1;
+    }
+
+    .about-cta-headline .accent { color: #e63329; }
+
+    .about-cta-sub {
+      font-size: 0.9rem; color: rgba(255,255,255,0.35);
+      margin-bottom: 2.5rem; font-weight: 300;
+    }
+
+    .btn-primary {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: #e63329; color: #fff; border: none;
+      padding: 1rem 1.8rem; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #ff4540; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Space Mono', monospace; font-size: 0.8rem;
+      color: rgba(255,255,255,0.25); letter-spacing: 0.1em;
+      display: flex; align-items: center; gap: 1px; text-decoration: none;
+    }
+
+    .footer-star { color: #e63329; display: inline-block; animation: spin-star 8s linear infinite; }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 0.85rem; color: rgba(255,255,255,0.18);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      .page-header { padding: 4rem 2rem 3rem; }
+      .about-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 2rem; }
+      .beliefs { padding: 3rem 2rem; }
+      .beliefs-grid { grid-template-columns: 1fr; }
+      .about-cta { padding: 4rem 2rem; }
+      footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pixel-bg"></div>
+  <div class="star-field" id="stars"></div>
+
+  <!-- NAV — shared across all pages -->
+  <nav>
+    <a class="logo" href="index.html">QUA<span class="logo-star">✦</span></a>
+    <ul class="nav-links">
+      <li onclick="location.href='work.html'">Work</li>
+      <li onclick="location.href='process.html'">Process</li>
+      <li class="active">About</li>
+    </ul>
+    <button class="nav-cta" onclick="location.href='index.html#contact'">Get the idea</button>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-eyebrow">About</div>
+    <h1 class="page-headline">
+      Two people.<br>
+      One <span class="accent">big idea.</span>
+    </h1>
+  </div>
+
+  <!-- ABOUT CONTENT — photo + bio -->
+  <section class="about-section">
+
+    <!-- PHOTO PLACEHOLDER
+         When ready: replace this entire div with:
+         <img src="your-photo.jpg" alt="Quax Studio" style="width:100%; aspect-ratio:4/5; object-fit:cover;">
+         Recommended: one candid shot of both of you on set or mid-production.
+    -->
+    <div class="photo-placeholder">
+      <span class="photo-placeholder-star">✦</span>
+      <div class="photo-placeholder-label">
+        Photo coming soon<br>
+        On set. In production.<br>
+        Doing the thing.
+      </div>
+    </div>
+
+    <!-- BIO COPY — edit paragraph text here -->
+    <div class="about-copy">
+      <div class="about-label">Who we are</div>
+
+      <!-- PARTNERSHIP HEADLINE — edit text here -->
+      <h2 class="about-headline">
+        We didn't wait for<br>
+        <span class="accent">permission.</span>
+      </h2>
+
+      <!-- BIO PARAGRAPH — PLACEHOLDER
+           Edit this when you're ready to write the real version.
+           Direction: combined experience in branding and production,
+           two people with good ideas who decided to just go make things happen.
+           No ex-agency name drops. No LinkedIn bio energy. Just honest.
+      -->
+      <p class="about-para">
+        Between us we've spent years in branding and production —
+        building things for other people's visions, learning what works,
+        watching what gets left on the table. At some point you stop
+        waiting for the right moment and you just go.
+      </p>
+
+      <p class="about-para">
+        Quax is what happens when two people with good instincts and
+        no patience for mediocrity decide to do it their way.
+        We're not a department. We're not a vendor.
+        We're the outside perspective your brand actually needs.
+      </p>
+
+      <!-- PLACEHOLDER NOTE — remove this when copy is finalized -->
+      <!-- TODO: Replace paragraphs above with final bio copy.
+           Keep it short — 2 paragraphs max. No roles/titles. Partnership energy. -->
+
+    </div>
+  </section>
+
+  <!-- BELIEFS / VALUES SECTION
+       Edit each belief-title and belief-desc below
+  -->
+  <section class="beliefs">
+    <div class="beliefs-label">What we believe</div>
+    <div class="beliefs-grid">
+
+      <!-- BELIEF 1 — edit title and description -->
+      <div class="belief-card">
+        <span class="belief-star">✦</span>
+        <div class="belief-title">Brands deserve a real idea</div>
+        <div class="belief-desc">Not a content calendar. Not a posting schedule. A single sharp concept that makes every decision easier and every execution stronger.</div>
+      </div>
+
+      <!-- BELIEF 2 — edit title and description -->
+      <div class="belief-card">
+        <span class="belief-star">✦</span>
+        <div class="belief-title">Authenticity isn't a vibe</div>
+        <div class="belief-desc">It's a strategic decision made upstream, not a filter applied at the end. When it's built in from the start, audiences feel it immediately.</div>
+      </div>
+
+      <!-- BELIEF 3 — edit title and description -->
+      <div class="belief-card">
+        <span class="belief-star">✦</span>
+        <div class="belief-title">The outside view is everything</div>
+        <div class="belief-desc">The gap between how a brand sees itself and how the world sees it — that gap is where we work. Closing it is the whole job.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA STRIP -->
+  <section class="about-cta">
+    <h2 class="about-cta-headline">
+      Like what you see?<br>
+      Let's make something <span class="accent">worth seeing.</span>
+    </h2>
+    <p class="about-cta-sub">We keep our client list intentionally small.</p>
+    <button class="btn-primary">Get in touch</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-logo" href="index.html">QUA<span class="footer-star">✦</span>&nbsp;STUDIO</a>
+    <div class="footer-tagline">Brand strategy for brands built to last.</div>
+  </footer>
+
+  <!-- JS: Star field -->
+  <script>
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 90; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() < 0.85 ? 1 : 2;
+      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*5}s;animation-delay:${Math.random()*6}s`;
+      starsContainer.appendChild(s);
+    }
+  </script>
+
+</body>
+</html>

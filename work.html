@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — QUA✦ STUDIO</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,700;1,700;1,900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #fff; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+    .pixel-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0.035;
+      background-image:
+        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .star-field { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .star { position: absolute; background: #fff; animation: twinkle var(--d) ease-in-out infinite alternate; }
+    @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.7; } }
+
+    section, nav, footer { position: relative; z-index: 1; }
+
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 2rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace; font-size: 1.3rem; font-weight: 700;
+      letter-spacing: 0.08em; color: #fff; display: flex; align-items: center;
+      gap: 1px; text-decoration: none;
+    }
+
+    .logo-star {
+      color: #e63329; font-size: 0.9rem; display: inline-block;
+      animation: spin-star 8s linear infinite; margin: 0 1px;
+    }
+
+    @keyframes spin-star { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); font-family: 'Space Mono', monospace;
+    }
+
+    .nav-links li { cursor: pointer; transition: color 0.2s; }
+    .nav-links li:hover, .nav-links li.active { color: #fff; }
+
+    .nav-cta {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      border: 1px solid rgba(255,255,255,0.25); padding: 0.6rem 1.2rem;
+      cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+      color: #fff; background: transparent;
+    }
+    .nav-cta:hover { background: #e63329; border-color: #e63329; }
+
+    /* ── COMING SOON — full viewport centered layout ── */
+    .coming-soon-wrap {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem;
+      gap: 2rem;
+    }
+
+    /* Animated pixel ship — same as homepage */
+    .pixel-ship {
+      image-rendering: pixelated;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 24px rgba(230,51,41,0.15));
+      margin-bottom: 1rem;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .coming-label {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: #e63329;
+      display: flex; align-items: center; gap: 0.8rem; justify-content: center;
+    }
+
+    .coming-label::before, .coming-label::after {
+      content: ''; display: block; width: 20px; height: 1px; background: #e63329;
+    }
+
+    /* COMING SOON HEADLINE — edit text here */
+    .coming-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900; font-style: italic;
+      line-height: 1.05;
+    }
+
+    .coming-headline .accent { color: #e63329; }
+
+    /* COMING SOON SUBTEXT — edit text here */
+    .coming-sub {
+      font-size: 0.95rem; color: rgba(255,255,255,0.4);
+      max-width: 420px; line-height: 1.75; font-weight: 300;
+    }
+
+    /* Case study teaser pills — hints at what's coming
+       Edit or add names as projects develop */
+    .teaser-pills {
+      display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .teaser-pill {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 0.5rem 1rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* PLACEHOLDER NOTE — these are teaser client/project names
+       Replace with real case study names when ready */
+    .teaser-pill.hint { color: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.04); }
+
+    footer {
+      padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Space Mono', monospace; font-size: 0.8rem;
+      color: rgba(255,255,255,0.25); letter-spacing: 0.1em;
+      display: flex; align-items: center; gap: 1px; text-decoration: none;
+    }
+
+    .footer-star { color: #e63329; display: inline-block; animation: spin-star 8s linear infinite; }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 0.85rem; color: rgba(255,255,255,0.18);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      .coming-soon-wrap { padding: 3rem 2rem; }
+      footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pixel-bg"></div>
+  <div class="star-field" id="stars"></div>
+
+  <nav>
+    <a class="logo" href="index.html">QUA<span class="logo-star">✦</span></a>
+    <ul class="nav-links">
+      <li class="active">Work</li>
+      <li onclick="location.href='process.html'">Process</li>
+      <li onclick="location.href='about.html'">About</li>
+    </ul>
+    <button class="nav-cta" onclick="location.href='index.html'">Get the idea</button>
+  </nav>
+
+  <!-- COMING SOON SECTION
+       Replace this entire section with case study cards when work is ready.
+       Each card should have: client name, category, year, hero image, brief outcome line.
+  -->
+  <section class="coming-soon-wrap">
+
+    <!-- Pixel ship — same sprite as homepage -->
+    <svg class="pixel-ship" width="100" height="100" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <rect x="7" y="1" width="2" height="2" fill="white"/>
+      <rect x="6" y="3" width="4" height="1" fill="white"/>
+      <rect x="5" y="4" width="6" height="1" fill="white"/>
+      <rect x="4" y="5" width="8" height="2" fill="white"/>
+      <rect x="3" y="7" width="10" height="2" fill="white"/>
+      <rect x="2" y="9" width="12" height="1" fill="white"/>
+      <rect x="1" y="10" width="3" height="2" fill="white"/>
+      <rect x="12" y="10" width="3" height="2" fill="white"/>
+      <rect x="5" y="10" width="6" height="2" fill="white"/>
+      <rect x="4" y="12" width="2" height="1" fill="#e63329"/>
+      <rect x="10" y="12" width="2" height="1" fill="#e63329"/>
+      <rect x="7" y="13" width="2" height="1" fill="#e63329"/>
+      <rect x="3" y="13" width="1" height="1" fill="#e63329"/>
+      <rect x="12" y="13" width="1" height="1" fill="#e63329"/>
+    </svg>
+
+    <div class="coming-label">Work</div>
+
+    <!-- HEADLINE — edit text here -->
+    <h1 class="coming-headline">
+      Currently in<br>
+      <span class="accent">orbit.</span>
+    </h1>
+
+    <!-- SUBTEXT — edit text here -->
+    <p class="coming-sub">
+      Case studies launching soon. We're doing the work first —
+      the documentation comes after.
+    </p>
+
+    <!-- TEASER PILLS — hints at upcoming case studies
+         PLACEHOLDER — replace with real client/project names when ready
+         Remove the .hint class to make them more visible -->
+    <div class="teaser-pills">
+      <div class="teaser-pill">Branding</div>
+      <div class="teaser-pill">UGC</div>
+      <div class="teaser-pill">Paid Social</div>
+      <div class="teaser-pill">Brand Strategy</div>
+      <div class="teaser-pill hint">Coming soon ✦</div>
+    </div>
+
+  </section>
+
+  <footer>
+    <a class="footer-logo" href="index.html">QUA<span class="footer-star">✦</span>&nbsp;STUDIO</a>
+    <div class="footer-tagline">Brand strategy for brands built to last.</div>
+  </footer>
+
+  <script>
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 90; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() < 0.85 ? 1 : 2;
+      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*5}s;animation-delay:${Math.random()*6}s`;
+      starsContainer.appendChild(s);
+    }
+  </script>
+
+</body>
+</html>
