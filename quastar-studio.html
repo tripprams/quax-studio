@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ================================================
+    QUA✦ STUDIO — quastar.studio
+    Pronounced: "Quay" or "Quay-star"
+
+    FONT SYSTEM:
+      Playfair Display Italic 900 — all headlines & titles
+      Space Mono 400/700        — logo, nav, labels, buttons, UI
+      DM Sans Light 300         — body copy, descriptions
+
+    COLOR SYSTEM:
+      #000000     Black (background)
+      #ffffff     White (primary text)
+      #e63329     Signal Red (accent — star glyph, highlights, CTA)
+      #1a1a1a     Off-black (card hover states)
+      rgba(255,255,255,0.07)  Subtle borders
+
+    TO EDIT FONTS: change the Google Fonts @import URL below
+    TO EDIT COLORS: find and replace the hex values above
+  ================================================ -->
+
+  <!-- GOOGLE FONTS — remove or swap typefaces here -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,700;1,700;1,900&display=swap');
+  </style>
+
+  <title>QUA✦ STUDIO — Brand Strategy</title>
+
+  <style>
+
+    /* ================================================
+       RESET & BASE
+    ================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+
+    /* ================================================
+       BACKGROUND — pixel grid overlay
+       Adjust opacity to make the grid more/less visible
+    ================================================ */
+    .pixel-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.035; /* GRID OPACITY — increase for stronger grid */
+      background-image:
+        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+      background-size: 40px 40px; /* GRID SIZE — change both values equally */
+    }
+
+
+    /* ================================================
+       STAR FIELD — randomly placed twinkling dots
+       Count and size controlled in the <script> below
+    ================================================ */
+    .star-field {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      animation: twinkle var(--d) ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.1; }
+      to { opacity: 0.7; }
+    }
+
+
+    /* ================================================
+       LAYOUT — all sections sit above the backgrounds
+    ================================================ */
+    section, nav, footer { position: relative; z-index: 1; }
+
+
+    /* ================================================
+       NAVIGATION
+       To change nav links: edit the <li> items in the HTML below
+       To change CTA button text: edit .nav-cta in HTML below
+    ================================================ */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* Logo mark — QUA✦ */
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      text-decoration: none;
+    }
+
+    /* The spinning red star glyph — used throughout */
+    .logo-star {
+      color: #e63329;
+      font-size: 0.9rem;
+      display: inline-block;
+      animation: spin-star 8s linear infinite;
+      margin: 0 1px;
+    }
+
+    @keyframes spin-star {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .nav-links li { cursor: pointer; transition: color 0.2s; }
+    .nav-links li:hover { color: #fff; }
+
+    .nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      color: #fff;
+      background: transparent;
+    }
+
+    .nav-cta:hover {
+      background: #e63329;
+      border-color: #e63329;
+    }
+
+
+    /* ================================================
+       HERO SECTION
+       Edit headline, subheadline, and button text in HTML below
+       The pixel ship floats on the right side
+    ================================================ */
+    .hero-wrap {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero {
+      padding: 0 4rem;
+      max-width: 700px;
+    }
+
+    /* Small red label above the headline */
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #e63329;
+      margin-bottom: 2.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: #e63329;
+    }
+
+    /* HERO HEADLINE — Playfair Display italic */
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 7vw, 6rem); /* min, preferred, max */
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-headline .accent { color: #e63329; }
+
+    /* Hero subheadline / descriptor */
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 480px;
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    /* PRIMARY CTA BUTTON — red fill */
+    .btn-primary {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: #e63329;
+      color: #fff;
+      border: none;
+      padding: 1rem 1.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: #ff4540; }
+
+    /* GHOST BUTTON — text only */
+    .btn-ghost {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(255,255,255,0.4);
+      border: none;
+      padding: 1rem 0;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: #fff; }
+
+
+    /* ================================================
+       PIXEL SHIP — the floating space invader
+       Size controlled by width/height on the <svg> tag
+       Animation speed controlled by "4s" in @keyframes float
+    ================================================ */
+    .ship-wrap {
+      position: absolute;
+      right: 5rem;
+      top: 50%;
+      transform: translateY(-55%);
+    }
+
+    .pixel-ship {
+      image-rendering: pixelated;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 24px rgba(230,51,41,0.15));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+
+    /* ================================================
+       TICKER TAPE — scrolling text strip
+       Edit the items array in the <script> at the bottom
+       Adjust animation speed by changing "24s"
+    ================================================ */
+    .ticker {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden;
+      padding: 0.85rem 0;
+    }
+
+    .ticker-inner {
+      display: flex;
+      gap: 4rem;
+      animation: ticker 24s linear infinite; /* SPEED — lower = faster */
+      white-space: nowrap;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .ticker-dot {
+      width: 3px;
+      height: 3px;
+      background: #e63329;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+
+    /* ================================================
+       SECTION BASE STYLES
+       All content sections share these base styles
+    ================================================ */
+    .section {
+      padding: 7rem 4rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* Small uppercase label above section headlines */
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 14px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      display: block;
+    }
+
+    /* Section headline — Playfair italic */
+    .section-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1.1;
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-headline .accent { color: #e63329; }
+
+    /* Section body copy */
+    .section-body {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.45);
+      max-width: 520px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+
+    /* ================================================
+       SERVICES GRID — 3 columns, 6 cards
+       To add/remove cards: copy/delete a .service-card div
+       To change to 2 columns: change repeat(3, 1fr) to repeat(2, 1fr)
+    ================================================ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px; /* the 1px gap + dark background creates the grid line effect */
+      background: rgba(255,255,255,0.07);
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      background: #000;
+      padding: 2.5rem;
+      transition: background 0.25s;
+    }
+
+    .service-card:hover { background: #060606; }
+
+    /* Service number label e.g. "01 ✦" */
+    .service-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: #e63329;
+      letter-spacing: 0.18em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Service title — Playfair italic */
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-style: italic;
+      margin-bottom: 0.9rem;
+      line-height: 1.2;
+    }
+
+    /* Service description — DM Sans light */
+    .service-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+
+    /* ================================================
+       MANIFESTO SECTION — two column layout
+       Left: pull quote. Right: pill list.
+    ================================================ */
+    .manifesto {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    /* The big italic quote */
+    .manifesto-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.8vw, 2rem);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .manifesto-quote .accent { color: #e63329; }
+
+    /* Smaller supporting copy under the quote */
+    .manifesto-sub {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 1.2rem;
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 340px;
+    }
+
+    /* Pill list — right column */
+    .pills {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+    }
+
+    .pill:hover {
+      border-color: rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    .pill-star {
+      color: #e63329;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+    }
+
+
+    /* ================================================
+       CTA SECTION — bottom of page call to action
+       Edit headline, subtext, and button in HTML below
+    ================================================ */
+    .cta-section {
+      padding: 9rem 4rem;
+      text-align: center;
+    }
+
+    .cta-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      line-height: 1.05;
+    }
+
+    .cta-headline .accent { color: #e63329; }
+
+    .cta-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 3rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+
+    /* Domain callout below CTA button */
+    .cta-domain {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.15);
+      margin-top: 2.5rem;
+      text-transform: uppercase;
+    }
+
+
+    /* ================================================
+       FOOTER
+    ================================================ */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      text-decoration: none;
+    }
+
+    .footer-star {
+      color: #e63329;
+      display: inline-block;
+      animation: spin-star 8s linear infinite;
+    }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.18);
+    }
+
+
+    /* ================================================
+       RESPONSIVE — mobile adjustments
+       Hides nav links and ship on small screens
+       Stacks grid to single column
+    ================================================ */
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      .hero { padding: 4rem 2rem; }
+      .ship-wrap { display: none; }
+      .section { padding: 4rem 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .manifesto { grid-template-columns: 1fr; gap: 3rem; }
+      .cta-section { padding: 5rem 2rem; }
+      footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- PIXEL GRID BACKGROUND -->
+  <div class="pixel-bg"></div>
+
+  <!-- STAR FIELD — dots injected by JS below -->
+  <div class="star-field" id="stars"></div>
+
+
+  <!-- ================================================
+    NAVIGATION
+    Edit links by changing the <li> text
+    Edit CTA button text directly
+  ================================================ -->
+  <nav>
+    <a class="logo" href="#">QUA<span class="logo-star">✦</span></a>
+    <ul class="nav-links">
+      <li>Work</li>
+      <li>Process</li>
+      <li>About</li>
+    </ul>
+    <button class="nav-cta">Get the idea</button>
+  </nav>
+
+
+  <!-- ================================================
+    HERO SECTION
+    Edit eyebrow, headline, subheadline, and buttons below
+    .accent spans turn text Signal Red (#e63329)
+  ================================================ -->
+  <div class="hero-wrap">
+    <section class="hero">
+
+      <!-- Small label above headline — edit text here -->
+      <div class="hero-eyebrow">quastar.studio</div>
+
+      <!-- MAIN HEADLINE — edit text here -->
+      <h1 class="hero-headline">
+        Your brand,<br>
+        seen from<br>
+        <span class="accent">orbit.</span>
+      </h1>
+
+      <!-- SUBHEADLINE — edit text here -->
+      <p class="hero-sub">
+        Most brands only see themselves from the inside.
+        We give you the outside view — one sharp idea
+        that reorients everything.
+      </p>
+
+      <!-- CTA BUTTONS — edit text here -->
+      <div class="hero-actions">
+        <button class="btn-primary">Get the one big idea</button>
+        <button class="btn-ghost">See our work →</button>
+      </div>
+
+    </section>
+
+    <!-- PIXEL SHIP — hand-drawn SVG space invader sprite
+         To resize: change width and height attributes
+         The red pixels are the thruster flame (#e63329) -->
+    <div class="ship-wrap">
+      <svg class="pixel-ship" width="200" height="200" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ship body — white pixels -->
+        <rect x="7" y="1" width="2" height="2" fill="white"/>
+        <rect x="6" y="3" width="4" height="1" fill="white"/>
+        <rect x="5" y="4" width="6" height="1" fill="white"/>
+        <rect x="4" y="5" width="8" height="2" fill="white"/>
+        <rect x="3" y="7" width="10" height="2" fill="white"/>
+        <rect x="2" y="9" width="12" height="1" fill="white"/>
+        <rect x="1" y="10" width="3" height="2" fill="white"/>
+        <rect x="12" y="10" width="3" height="2" fill="white"/>
+        <rect x="5" y="10" width="6" height="2" fill="white"/>
+        <!-- Thruster flames — Signal Red -->
+        <rect x="4" y="12" width="2" height="1" fill="#e63329"/>
+        <rect x="10" y="12" width="2" height="1" fill="#e63329"/>
+        <rect x="7" y="13" width="2" height="1" fill="#e63329"/>
+        <rect x="3" y="13" width="1" height="1" fill="#e63329"/>
+        <rect x="12" y="13" width="1" height="1" fill="#e63329"/>
+      </svg>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+    TICKER TAPE
+    Edit the items array in the <script> at the bottom of this file
+  ================================================ -->
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker"></div>
+  </div>
+
+
+  <!-- ================================================
+    SERVICES SECTION
+    Edit section-label, headline, body copy, and
+    each service card title + description below.
+    PLACEHOLDER — copy will be updated
+  ================================================ -->
+  <section class="section">
+    <div class="section-label">What we do</div>
+
+    <h2 class="section-headline">
+      One idea.<br>
+      Everything <span class="accent">else follows.</span>
+    </h2>
+
+    <p class="section-body">
+      Brand health isn't a dashboard. It's the feeling someone gets
+      when they encounter you — in the feed, on the shelf, in the unboxing.
+      We align all of it around a single, resonant truth.
+    </p>
+
+    <!-- SERVICE CARDS — edit title and desc for each -->
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-number">01 ✦</div>
+        <!-- PLACEHOLDER — update service name -->
+        <div class="service-title">The One Big Idea</div>
+        <!-- PLACEHOLDER — update description -->
+        <div class="service-desc">A single strategic concept that anchors your brand's identity, messaging, and presence. The reference point everything else gets measured against.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">02 ✦</div>
+        <!-- PLACEHOLDER — update service name -->
+        <div class="service-title">UGC & Content</div>
+        <!-- PLACEHOLDER — update description -->
+        <div class="service-desc">Creator strategy and content production that actually feels like your brand — not a borrowed aesthetic. Authentic by design, not by accident.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">03 ✦</div>
+        <!-- PLACEHOLDER — update service name -->
+        <div class="service-title">Paid Social</div>
+        <!-- PLACEHOLDER — update description -->
+        <div class="service-desc">Ad strategy and management built around brand health, not just ROAS. Because the cheapest click isn't always the one worth taking.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">04 ✦</div>
+        <!-- PLACEHOLDER — update service name -->
+        <div class="service-title">Brand Audit</div>
+        <!-- PLACEHOLDER — update description -->
+        <div class="service-desc">We look at every consumer touchpoint — packaging, shelf, digital, social — and show you the gap between how you see yourself and how the world sees you.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">05 ✦</div>
+        <!-- PLACEHOLDER — update service name -->
+        <div class="service-title">Holistic Strategy</div>
+        <!-- PLACEHOLDER — update description -->
+        <div class="service-desc">From the first scroll to the unboxing. Brand intentionality across every channel, built for brands that want to last, not just convert.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-number">06 ✦</div>
+        <!-- PLACEHOLDER — update service name -->
+        <div class="service-title">Digital Transition</div>
+        <!-- PLACEHOLDER — update description -->
+        <div class="service-desc">You have the history, the product, the trust. We give you the signal to carry it online without losing what made you real in the first place.</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================================================
+    MANIFESTO SECTION
+    Left column: pull quote + supporting copy
+    Right column: pill list of brand concepts
+    Edit quote, sub-copy, and pills below
+  ================================================ -->
+  <section class="section">
+    <div class="manifesto">
+
+      <!-- LEFT — quote -->
+      <div>
+        <div class="section-label">The point of view</div>
+        <!-- MANIFESTO QUOTE — edit text here -->
+        <div class="manifesto-quote">
+          "Most agencies give you more content.
+          We give you the <span class="accent">idea</span>
+          that makes content matter."
+        </div>
+        <!-- Supporting copy under quote -->
+        <p class="manifesto-sub">
+          Intentionality isn't a buzzword. It's the difference
+          between a brand that accumulates and a brand that compounds.
+        </p>
+      </div>
+
+      <!-- RIGHT — pill list
+           Add/remove pills by copying/deleting a .pill div -->
+      <div class="pills">
+        <div class="pill"><span class="pill-star">✦</span> Shift in perspective</div>
+        <div class="pill"><span class="pill-star">✦</span> Holistic brand health</div>
+        <div class="pill"><span class="pill-star">✦</span> Authenticity as strategy</div>
+        <div class="pill"><span class="pill-star">✦</span> Intentional brand building</div>
+        <div class="pill"><span class="pill-star">✦</span> UGC that doesn't feel off-brand</div>
+        <div class="pill"><span class="pill-star">✦</span> The one big idea</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================================================
+    CTA SECTION — bottom of page
+    Edit headline, subtext, and button text below
+  ================================================ -->
+  <section class="section cta-section">
+
+    <!-- CTA HEADLINE -->
+    <h2 class="cta-headline">
+      Ready to see your<br>
+      brand from <span class="accent">orbit?</span>
+    </h2>
+
+    <!-- CTA subtext -->
+    <p class="cta-sub">We take on a small number of clients at a time. Intentionally.</p>
+
+    <!-- CTA button — edit text and link href here -->
+    <button class="btn-primary" style="padding: 1.1rem 2.4rem; font-size: 0.72rem;">
+      Let's talk
+    </button>
+
+    <!-- Domain callout -->
+    <div class="cta-domain">quastar.studio</div>
+
+  </section>
+
+
+  <!-- ================================================
+    FOOTER
+    Edit tagline text below
+  ================================================ -->
+  <footer>
+    <a class="footer-logo" href="#">QUA<span class="footer-star">✦</span>&nbsp;STUDIO</a>
+    <!-- FOOTER TAGLINE — edit text here -->
+    <div class="footer-tagline">Brand strategy for brands built to last.</div>
+  </footer>
+
+
+  <!-- ================================================
+    JAVASCRIPT
+
+    1. STAR FIELD — controls how many stars and their size
+       Change 90 to more/fewer stars
+       Change 0.85 probability to adjust ratio of small vs large stars
+
+    2. TICKER TAPE — edit the items array to change scrolling text
+       Add/remove strings from the array
+  ================================================ -->
+  <script>
+
+    /* --- STAR FIELD --- */
+    const starsContainer = document.getElementById('stars');
+    const STAR_COUNT = 90; /* EDIT — number of stars */
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() < 0.85 ? 1 : 2; /* 85% small (1px), 15% large (2px) */
+      s.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        top: ${Math.random() * 100}%;
+        left: ${Math.random() * 100}%;
+        --d: ${2 + Math.random() * 5}s;
+        animation-delay: ${Math.random() * 6}s
+      `;
+      starsContainer.appendChild(s);
+    }
+
+    /* --- TICKER TAPE ITEMS ---
+       Edit this array to change the scrolling text strip.
+       Each string becomes one item. */
+    const tickerItems = [
+      'Shift in perspective',
+      'Brand health',
+      'Holistic strategy',
+      'Authenticity',
+      'The one big idea',
+      'UGC & content',
+      'Intentionality',
+      'Brand building',
+      'Digital transition',
+      'quastar.studio',
+      'One idea. Everything follows.'
+    ];
+
+    const tickerEl = document.getElementById('ticker');
+    /* Items are doubled so the scroll loops seamlessly */
+    [...tickerItems, ...tickerItems].forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'ticker-item';
+      el.innerHTML = `<span class="ticker-dot"></span>${item}`;
+      tickerEl.appendChild(el);
+    });
+
+  </script>
+
+</body>
+</html>
